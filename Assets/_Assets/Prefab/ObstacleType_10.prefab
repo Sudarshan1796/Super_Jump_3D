@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 7328888939796420781}
   - component: {fileID: 4951159307307169375}
   - component: {fileID: 1486113670135546124}
+  - component: {fileID: 4263065992314712068}
   m_Layer: 0
   m_Name: T_Shape
   m_TagString: Obstacle
@@ -163,3 +164,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.4376378, y: 2, z: 1.1863313}
   m_Center: {x: 5.4095564, y: 0, z: 0.06839323}
+--- !u!114 &4263065992314712068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973746157169120025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591a1e2ef10b75b42938792a757b2c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPosition: {x: -2, y: 0, z: 0}
+  finalPosition: {x: 2, y: 0, z: 0}
+  speed: 3

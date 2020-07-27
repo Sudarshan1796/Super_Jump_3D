@@ -16,6 +16,14 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     {
         Initialized();
     }
+    void OnEnable()
+    {
+        GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
+    }
+    void OnDisable()
+    {
+        GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
+    }
     public void Initialized()
     {
         transform.localPosition = initialPosition;
@@ -23,7 +31,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
         isMovingToFinalPosition = true;
         _isPlayerMoving = false;
     }
-    void Update()
+    void UpdateMethod()
     {
         if (!_isPlayerMoving)
         {

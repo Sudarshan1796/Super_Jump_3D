@@ -13,6 +13,14 @@ public class ObstacleRotate : MonoBehaviour
     {
         Initialized();
     }
+    void OnEnable()
+    {
+        GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
+    }
+    void OnDisable()
+    {
+        GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
+    }
     public void Initialized()
     {
         _isPlayerMoving = false;
@@ -25,7 +33,7 @@ public class ObstacleRotate : MonoBehaviour
     {
         _isPlayerMoving = isMoving;
     }
-    void Update()
+    void UpdateMethod()
     {
         if (!_isPlayerMoving)
         {

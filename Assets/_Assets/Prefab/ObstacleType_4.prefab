@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2533414315706112845}
   - component: {fileID: 4258351028749558338}
   - component: {fileID: 353171407203994572}
+  - component: {fileID: 8763495495041537624}
   m_Layer: 0
   m_Name: Circle_Half
   m_TagString: Obstacle
@@ -105,6 +106,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8941941, y: 1.3676975, z: 8.007338}
   m_Center: {x: 4.5, y: 0.6, z: 0.0000019073486}
+--- !u!114 &8763495495041537624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533414315708368269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c567850c1109b604db1acf2b95bcfc09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 45
+  axis: 1
+  direction: 1
 --- !u!1 &2859336995305132434
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +179,7 @@ GameObject:
   - component: {fileID: 3048274635450068996}
   - component: {fileID: 1207631710456604281}
   - component: {fileID: 3919439398814049797}
+  - component: {fileID: 3504414473874820332}
   m_Layer: 0
   m_Name: Circle_Half_Small
   m_TagString: Obstacle
@@ -255,3 +272,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.85, y: 1.4, z: 8}
   m_Center: {x: 4.5, y: 0.6, z: 0.0000023841858}
+--- !u!114 &3504414473874820332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8197585665232096178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c567850c1109b604db1acf2b95bcfc09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 45
+  axis: 1
+  direction: 0
