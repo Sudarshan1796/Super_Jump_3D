@@ -18,11 +18,13 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     }
     void OnEnable()
     {
-        GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
+        if (GameUpdater.GetInstance)
+            GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
     }
     void OnDisable()
     {
-        GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
+        if (GameUpdater.GetInstance)
+            GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
     }
     public void Initialized()
     {

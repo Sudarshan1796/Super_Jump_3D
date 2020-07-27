@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a504ece2b003784685164a4eb5e40df, type: 3}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 348936828193702315}
   - component: {fileID: 5140770818415801679}
   m_Layer: 0
-  m_Name: Cylinder (2)
+  m_Name: Cylinder
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,7 +231,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a504ece2b003784685164a4eb5e40df, type: 3}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -355,7 +355,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a504ece2b003784685164a4eb5e40df, type: 3}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 4689181746554464545}
   - component: {fileID: 4694923475378274329}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: Cylinder
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -479,7 +479,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a504ece2b003784685164a4eb5e40df, type: 3}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

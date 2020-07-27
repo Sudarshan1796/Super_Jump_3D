@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 748442839530999427}
   - component: {fileID: 5614391744132541243}
   - component: {fileID: 1193734053118500940}
+  - component: {fileID: 1947987431}
   m_Layer: 0
   m_Name: Square_Hole
   m_TagString: Obstacle
@@ -105,7 +106,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1d24dbc3c64e978429d84e6bf6a45c5b, type: 3}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,3 +178,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.4951458, y: 4.423581, z: 2}
   m_Center: {x: 3.72, y: 0.7814555, z: 0}
+--- !u!114 &1947987431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6095090369020701950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c567850c1109b604db1acf2b95bcfc09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 30
+  axis: 1
+  direction: 0

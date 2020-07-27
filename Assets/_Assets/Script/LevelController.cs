@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> jumpPoints;
+    [SerializeField] private List<Transform> jumpPoints;
 
-    public List<GameObject> GetJumpPoints()
+    public List<Transform> GetJumpPoints()
     {
         return jumpPoints;
     }
