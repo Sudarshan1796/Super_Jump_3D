@@ -24,7 +24,7 @@ public class GamePlayManager : MonoBehaviour
     internal Action gameStart;
     internal Action onStartJump;
     internal Action onFinishJump;
-
+    internal GameState gamestate;
     private void Awake()
     {
         if (!Application.isEditor)
@@ -37,6 +37,7 @@ public class GamePlayManager : MonoBehaviour
     {
         EnableVibration(true);
         InitializeLevel();
+        gamestate = GameState.HomeScreen;
     }
 
     internal void InitializeLevel()
@@ -92,4 +93,10 @@ public class GamePlayManager : MonoBehaviour
     {
         HapticFeedback.Vibrate(vibrationType);
     }
+}
+public enum GameState
+{
+    HomeScreen,
+    Playing,
+    ResultScreen
 }
