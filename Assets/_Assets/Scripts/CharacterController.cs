@@ -76,7 +76,7 @@ public class CharacterController : MonoBehaviour
                 }
             }
 
-            if (!isSlowMotionDone && isJumping && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.75f)
+            if (!isSlowMotionDone && isJumping && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.6f)
             {
                 isSlowMotionDone = true;
                 Time.timeScale = slowMotionTimeScale;
@@ -106,7 +106,7 @@ public class CharacterController : MonoBehaviour
 
     private IEnumerator ResetTimeScale()
     {
-        yield return new WaitForSecondsRealtime(0.6f);
+        yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 1;
         //Time.fixedDeltaTime *= slowFactor;
         //Time.maximumDeltaTime *= slowFactor;
