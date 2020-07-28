@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
 
     private List<Transform> levelJumpPoints;
     private GameObject currentLoadedevel;
+    private LevelController currentLevelController;
 
     private static LevelManager instance;
     public static LevelManager GetIntance
@@ -69,9 +70,17 @@ public class LevelManager : MonoBehaviour
         }
         int index = currentLevel % levels.Count;
         currentLoadedevel = Instantiate(levels[index], Vector3.zero, Quaternion.identity);
-        LevelController levelController = currentLoadedevel.GetComponent<LevelController>();
-        InitiliseJumpPoints(levelController);
+        currentLevelController = currentLoadedevel.GetComponent<LevelController>();
+        InitiliseJumpPoints(currentLevelController);
         currentLoadedevel.SetActive(true);
+    }
+
+    public void PlayWinParticleEffects()
+    {
+        foreach (var particleEffect in currentLevelController.GetWinParticleEffects())
+        {
+            particleEffect.Play();
+        }
     }
 
     private void IncreaseLevel()
