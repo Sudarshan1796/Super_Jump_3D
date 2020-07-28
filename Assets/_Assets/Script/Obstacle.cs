@@ -7,15 +7,7 @@ public class Obstacle : MonoBehaviour
     [SerializeField] IObstacleController[] obstacles;
 
     private bool _isPlayerMoving;
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-       
-    }
     /// <summary>
     /// call this when player start to move
     /// </summary>

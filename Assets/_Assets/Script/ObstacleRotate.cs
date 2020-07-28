@@ -14,16 +14,24 @@ public class ObstacleRotate : MonoBehaviour
     {
         Initialized();
     }
+
     void OnEnable()
     {
         AddListners();
     }
+
     private void AddListners()
     {
         if (GameUpdater.GetInstance)
+        {
             GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
-        GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
-        GamePlayManager.GetInstance.onStartJump += OnJumpStart;
+        }
+
+        if (GamePlayManager.GetInstance)
+        {
+            GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
+            GamePlayManager.GetInstance.onStartJump += OnJumpStart;
+        }
     }
 
     void OnDisable()
@@ -34,9 +42,15 @@ public class ObstacleRotate : MonoBehaviour
     private void RemoveListner()
     {
         if (GameUpdater.GetInstance)
+        {
             GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
-        GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
-        GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
+        }
+
+        if(GamePlayManager.GetInstance)
+        {
+            GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
+            GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
+        }
     }
 
     public void Initialized()
@@ -44,6 +58,7 @@ public class ObstacleRotate : MonoBehaviour
         _isPlayerMoving = false;
         _gamePlayManager = GamePlayManager.GetInstance;
     }
+
     /// <summary>
     /// call this when player start to move
     /// </summary>
@@ -52,6 +67,7 @@ public class ObstacleRotate : MonoBehaviour
     {
         _isPlayerMoving = true;
     }
+
     /// <summary>
     /// call this when player Finish to move
     /// </summary>
@@ -60,6 +76,7 @@ public class ObstacleRotate : MonoBehaviour
     {
         _isPlayerMoving = false;
     }
+
     void UpdateMethod()
     {
         if (_gamePlayManager == null)
@@ -71,6 +88,7 @@ public class ObstacleRotate : MonoBehaviour
             Activate();
         }
     }
+
     public void Activate()
     {
         if (axis == RotationAxis.Yaxis)

@@ -12,21 +12,31 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     private bool isMovingToFinalPosition;
     private bool _isPlayerMoving;
     private GamePlayManager _gamePlayManager;
+
     void Start()
     {
         Initialized();
     }
+
     void OnEnable()
     {
         AddListners();
     }
+
     private void AddListners()
     {
         if (GameUpdater.GetInstance)
+        {
             GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
-        GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
-        GamePlayManager.GetInstance.onStartJump += OnJumpStart;
+        }
+
+        if (GamePlayManager.GetInstance)
+        {
+            GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
+            GamePlayManager.GetInstance.onStartJump += OnJumpStart;
+        }
     }
+
     void OnDisable()
     {
         RemoveListner();
@@ -35,10 +45,17 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     private void RemoveListner()
     {
         if (GameUpdater.GetInstance)
+        {
             GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
-        GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
-        GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
+        }
+
+        if (GamePlayManager.GetInstance)
+        {
+            GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
+            GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
+        }
     }
+
     public void Initialized()
     {
         transform.localPosition = initialPosition;
@@ -47,6 +64,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
         _isPlayerMoving = false;
         _gamePlayManager = GamePlayManager.GetInstance;
     }
+
     void UpdateMethod()
     {
         if (_gamePlayManager == null)
@@ -58,6 +76,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
             Activate();
         }
     }
+
     public void Activate()
     {
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, Time.deltaTime * speed);
@@ -66,6 +85,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
             OnFinalPositionReach();
         }
     }
+
     public void OnFinalPositionReach()
     {
         if(isMovingToFinalPosition)
@@ -81,6 +101,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
             isMovingToFinalPosition = true;
         }
     }
+
     /// <summary>
     /// call this when player start to move
     /// </summary>
@@ -89,6 +110,7 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     {
         _isPlayerMoving = true;
     }
+
     /// <summary>
     /// call this when player Finish to move
     /// </summary>
