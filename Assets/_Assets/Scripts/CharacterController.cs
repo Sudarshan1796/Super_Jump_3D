@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using com.SuperJump.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static GameVariables;
@@ -26,6 +27,19 @@ public class CharacterController : MonoBehaviour
     private int lose = Animator.StringToHash("Lose");
     private int win = Animator.StringToHash("Win");
 
+    private static CharacterController instance;
+
+    public static CharacterController GetInstance
+    {
+        get
+        {
+            if(instance==null)
+            {
+                instance = FindObjectOfType<CharacterController>();
+            }
+            return instance;
+        }
+    }
     private void Awake()
     {
         gamePlayManager = GamePlayManager.GetInstance;
@@ -36,8 +50,7 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         slowMotionTimeScale = Time.timeScale / slowFactor;
-        GetNextJumpingPoint();
-        animator.SetTrigger(idle);
+        Init();
     }
 
     private void OnEnable()
@@ -52,11 +65,18 @@ public class CharacterController : MonoBehaviour
             GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
     }
 
+    public void Init()
+    {
+        transform.position = Vector3.zero;
+        GetNextJumpingPoint();
+        animator.SetTrigger(idle);
+    }
+
     void UpdateMethod()
     {
-        if (gamePlayManager.gamePlayState == GamePlayState.GameStart)
+        if (gamePlayManager.gamePlayState == GamePlayState.Playing)
         {
-            if (!isJumping && Input.GetKeyDown(KeyCode.Space))
+            if (!isJumping && Input.GetMouseButtonDown(0))
             {
                 isJumping = true;
                 initialPosition = transform.position;
@@ -74,6 +94,7 @@ public class CharacterController : MonoBehaviour
                         animator.SetTrigger(jump_3);
                         break;
                 }
+                gamePlayManager.Jump(true);
             }
 
             if (!isSlowMotionDone && isJumping && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.6f)
@@ -90,11 +111,12 @@ public class CharacterController : MonoBehaviour
     private void GetNextJumpingPoint()
     {
         if (LevelManager.GetIntance.jumpPointIndex < LevelManager.GetIntance.GetTotalJumpPointsCount())
-        {
+         {
             isJumping = false;
             isSlowMotionDone = false;
             jumpPoint = LevelManager.GetIntance.GetNextJumpPoint();
             LevelManager.GetIntance.jumpPointIndex++;
+            UIManager.GetInstance.OnPlayerJump(LevelManager.GetIntance.jumpPointIndex);
             transform.LookAt(jumpPoint);
         }
         else
@@ -102,6 +124,7 @@ public class CharacterController : MonoBehaviour
             gamePlayManager.OnGameOver(true);
             animator.SetTrigger(win);
         }
+        gamePlayManager.Jump(false);
     }
 
     private IEnumerator ResetTimeScale()

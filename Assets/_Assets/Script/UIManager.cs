@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace com.SuperJump.UI
 {
     public class UIManager : MonoBehaviour
     {
         [SerializeField] private List<GameObject> screens;
+        [SerializeField] private GameObject winPanel, loosePanel;
+        [SerializeField] private Button tapToStartBtn, retryBtn, nextBtn;
+        [SerializeField] private LevelProgress levelProgress;
+        [SerializeField] private Text curLvltext, nextLvlText;
         private static UIManager instance;
         public static UIManager GetInstance
         {
@@ -43,11 +48,95 @@ namespace com.SuperJump.UI
                 }
             }
         }
+        private void OnEnable()
+        {
+            AddListener();
+            Activate(Screen.Home);
+        }
+        private void OnDisable()
+        {
+            RemoveListener();
+        }
+        private void AddListener()
+        {
+            tapToStartBtn.onClick.AddListener(OnTapToPlayClick);
+            nextBtn.onClick.AddListener(OnNextLevelClick);
+            retryBtn.onClick.AddListener(OnRetryClick);
+            GamePlayManager.GetInstance.onGameLose += OnGameLoose;
+            GamePlayManager.GetInstance.onGamWon += OnGameWin;
+        }
+        private void RemoveListener()
+        {
+            tapToStartBtn.onClick.RemoveListener(OnTapToPlayClick);
+            nextBtn.onClick.RemoveListener(OnNextLevelClick);
+            retryBtn.onClick.RemoveListener(OnRetryClick);
+            GamePlayManager.GetInstance.onGameLose -= OnGameLoose;
+            GamePlayManager.GetInstance.onGamWon -= OnGameWin;
+        }
+        private void OnTapToPlayClick()
+        {
+            Activate(Screen.Gameplay);
+            Deactivate(Screen.Home);
+            levelProgress.StartLevel();
+            SetLevelText();
+            GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
+        }
+        private void SetLevelText()
+        {
+            var count = LevelManager.GetIntance.currentLevel;
+            curLvltext.text = count.ToString();
+            nextLvlText.text = (count + 1).ToString();
+        }
+        private void OnRetryClick()
+        {
+            GamePlayManager.GetInstance.RestartGame();
+            Activate(Screen.Gameplay);
+            Deactivate(Screen.Results);
+            levelProgress.StartLevel();
+            SetLevelText();
+            CharacterController.GetInstance.Init();
+            GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
+        }
+        private void OnNextLevelClick()
+        {
+            GamePlayManager.GetInstance.RestartGame();
+            Activate(Screen.Gameplay);
+            Deactivate(Screen.Results);
+            levelProgress.StartLevel();
+            SetLevelText();
+            CharacterController.GetInstance.Init();
+            GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
+        }
+        private void OnGameLoose()
+        {
+            //GameUpdater.GetInstance.RemoveAllUpdate();
+            GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.GameOver;
+            levelProgress.StopLevelprogress();
+            Activate(Screen.Results);
+            Deactivate(Screen.Gameplay);
+            loosePanel.SetActive(true);
+            winPanel.SetActive(false);
+        }
+        private void OnGameWin()
+        {
+            //GameUpdater.GetInstance.RemoveAllUpdate();
+            GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.GameOver;
+            levelProgress.StopLevelprogress();
+            Activate(Screen.Results);
+            Deactivate(Screen.Gameplay);
+            winPanel.SetActive(true);
+            loosePanel.SetActive(false);
+        }
+        public void OnPlayerJump(int value)
+        {
+            levelProgress.minValue = value - 1;
+        }
     }
     public enum Screen
     {
         Loading,
         Home,
-        Gameplay
+        Gameplay,
+        Results
     }
 }

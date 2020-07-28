@@ -9,34 +9,63 @@ public class ObstacleRotate : MonoBehaviour
     [SerializeField] private RotationDirection direction;
 
     private bool _isPlayerMoving;
+    private GamePlayManager _gamePlayManager;
     void Start()
     {
         Initialized();
     }
     void OnEnable()
     {
+        AddListners();
+    }
+    private void AddListners()
+    {
         if (GameUpdater.GetInstance)
             GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
+        GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
+        GamePlayManager.GetInstance.onStartJump += OnJumpStart;
     }
+
     void OnDisable()
+    {
+        RemoveListner();
+    }
+
+    private void RemoveListner()
     {
         if (GameUpdater.GetInstance)
             GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
+        GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
+        GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
     }
+
     public void Initialized()
     {
         _isPlayerMoving = false;
+        _gamePlayManager = GamePlayManager.GetInstance;
     }
     /// <summary>
     /// call this when player start to move
     /// </summary>
     /// <param name="isMoving"></param>
-    private void OnPlayerMove(bool isMoving)
+    private void OnJumpStart()
     {
-        _isPlayerMoving = isMoving;
+        _isPlayerMoving = true;
+    }
+    /// <summary>
+    /// call this when player Finish to move
+    /// </summary>
+    /// <param name="isMoving"></param>
+    private void OnJumpEnd()
+    {
+        _isPlayerMoving = false;
     }
     void UpdateMethod()
     {
+        if (_gamePlayManager == null)
+        {
+            _gamePlayManager = GamePlayManager.GetInstance;
+        }
         if (!_isPlayerMoving)
         {
             Activate();

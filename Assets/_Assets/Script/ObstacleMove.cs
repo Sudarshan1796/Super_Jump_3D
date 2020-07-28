@@ -11,20 +11,33 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     private Vector3 targetPosition;
     private bool isMovingToFinalPosition;
     private bool _isPlayerMoving;
-
+    private GamePlayManager _gamePlayManager;
     void Start()
     {
         Initialized();
     }
     void OnEnable()
     {
+        AddListners();
+    }
+    private void AddListners()
+    {
         if (GameUpdater.GetInstance)
             GameUpdater.GetInstance.AddToUpdateEvent(UpdateMethod);
+        GamePlayManager.GetInstance.onFinishJump += OnJumpEnd;
+        GamePlayManager.GetInstance.onStartJump += OnJumpStart;
     }
     void OnDisable()
     {
+        RemoveListner();
+    }
+
+    private void RemoveListner()
+    {
         if (GameUpdater.GetInstance)
             GameUpdater.GetInstance.RemoveFromUpdateEvent(UpdateMethod);
+        GamePlayManager.GetInstance.onFinishJump -= OnJumpEnd;
+        GamePlayManager.GetInstance.onStartJump -= OnJumpStart;
     }
     public void Initialized()
     {
@@ -32,9 +45,14 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
         targetPosition = finalPosition;
         isMovingToFinalPosition = true;
         _isPlayerMoving = false;
+        _gamePlayManager = GamePlayManager.GetInstance;
     }
     void UpdateMethod()
     {
+        if (_gamePlayManager == null)
+        {
+            _gamePlayManager = GamePlayManager.GetInstance;
+        }
         if (!_isPlayerMoving)
         {
             Activate();
@@ -67,8 +85,16 @@ public class ObstacleMove : MonoBehaviour, IObstacleController
     /// call this when player start to move
     /// </summary>
     /// <param name="isMoving"></param>
-    private void OnPlayerMove(bool isMoving)
+    private void OnJumpStart()
     {
-        _isPlayerMoving = isMoving;
+        _isPlayerMoving = true;
+    }
+    /// <summary>
+    /// call this when player Finish to move
+    /// </summary>
+    /// <param name="isMoving"></param>
+    private void OnJumpEnd()
+    {
+        _isPlayerMoving = false;
     }
 }

@@ -5,6 +5,7 @@ public static class GameVariables
     {
         None,
         GameStart,
+        Playing,
         GameOver
     }
 }
