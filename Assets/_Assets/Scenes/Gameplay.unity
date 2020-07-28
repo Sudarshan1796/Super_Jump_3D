@@ -141969,7 +141969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.6
-  slowFactor: 20
+  slowFactor: 15
 --- !u!136 &18916961412290196
 CapsuleCollider:
   m_ObjectHideFlags: 0
