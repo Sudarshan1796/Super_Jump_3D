@@ -8,7 +8,9 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField]
     private float speed = 0.6f,
-                  slowFactor = 20;
+                  slowFactor = 20,
+                  jumpAngle = 45.0f,
+                  gravity = 9.8f;
 
     private GamePlayManager gamePlayManager;
     private Transform jumpPoint;
@@ -16,6 +18,7 @@ public class CharacterController : MonoBehaviour
     private Rigidbody playerRigidBody;
     private LTDescr leanTweenObject;
     private Vector3 initialPosition;
+    private Vector3 targetJumpPosition;
     private float slowMotionTimeScale;
     private bool isJumping;
     private bool isSlowMotionDone;
@@ -28,7 +31,6 @@ public class CharacterController : MonoBehaviour
     private int win = Animator.StringToHash("Win");
 
     private static CharacterController instance;
-
     public static CharacterController GetInstance
     {
         get
@@ -40,6 +42,7 @@ public class CharacterController : MonoBehaviour
             return instance;
         }
     }
+
     private void Awake()
     {
         gamePlayManager = GamePlayManager.GetInstance;
@@ -80,7 +83,8 @@ public class CharacterController : MonoBehaviour
             {
                 isJumping = true;
                 initialPosition = transform.position;
-                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear).setOnComplete(GetNextJumpingPoint);
+                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear);//.setOnComplete(GetNextJumpingPoint);
+                leanTweenObject.resume();
                 var val = Random.Range(0, 3);
                 switch (val)
                 {
@@ -104,10 +108,37 @@ public class CharacterController : MonoBehaviour
                 //Time.fixedDeltaTime /= slowFactor;
                 //Time.maximumDeltaTime /= slowFactor;
                 StartCoroutine(ResetTimeScale());
+                leanTweenObject.pause();
+                StartCoroutine(Jump());
             }
         }
     }
-    
+
+    IEnumerator Jump()
+    {
+        targetJumpPosition = transform.position + new Vector3(0, 0, 6);
+        float target_Distance = Vector3.Distance(transform.position, targetJumpPosition);
+        float projectile_Velocity = target_Distance / (Mathf.Sin(2 * jumpAngle * Mathf.Deg2Rad) / gravity);
+        float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(jumpAngle * Mathf.Deg2Rad);
+        float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(jumpAngle * Mathf.Deg2Rad);
+        float flightDuration = target_Distance / Vx;
+        float elapse_time = 0;
+
+        while (elapse_time < flightDuration)
+        {
+            transform.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
+
+            elapse_time += Time.deltaTime;
+
+            yield return null;
+            if (elapse_time > flightDuration * 0.2f)
+            {
+                LeanTween.move(gameObject, jumpPoint.localPosition, speed * 0.5f).setEase(LeanTweenType.linear).setOnComplete(GetNextJumpingPoint);
+                break;
+            }
+        }
+    }
+
     private void GetNextJumpingPoint()
     {
         if (LevelManager.GetIntance.jumpPointIndex < LevelManager.GetIntance.GetTotalJumpPointsCount())

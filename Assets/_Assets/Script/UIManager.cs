@@ -70,8 +70,11 @@ namespace com.SuperJump.UI
             tapToStartBtn.onClick.RemoveListener(OnTapToPlayClick);
             nextBtn.onClick.RemoveListener(OnNextLevelClick);
             retryBtn.onClick.RemoveListener(OnRetryClick);
-            GamePlayManager.GetInstance.onGameLose -= OnGameLoose;
-            GamePlayManager.GetInstance.onGamWon -= OnGameWin;
+            if (GamePlayManager.GetInstance)
+            {
+                GamePlayManager.GetInstance.onGameLose -= OnGameLoose;
+                GamePlayManager.GetInstance.onGamWon -= OnGameWin;
+            }
         }
         private void OnTapToPlayClick()
         {
