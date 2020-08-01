@@ -53,10 +53,12 @@ namespace com.SuperJump.UI
             AddListener();
             Activate(Screen.Home);
         }
+
         private void OnDisable()
         {
             RemoveListener();
         }
+
         private void AddListener()
         {
             tapToStartBtn.onClick.AddListener(OnTapToPlayClick);
@@ -65,6 +67,7 @@ namespace com.SuperJump.UI
             GamePlayManager.GetInstance.onGameLose += OnGameLoose;
             GamePlayManager.GetInstance.onGamWon += OnGameWin;
         }
+
         private void RemoveListener()
         {
             tapToStartBtn.onClick.RemoveListener(OnTapToPlayClick);
@@ -76,6 +79,7 @@ namespace com.SuperJump.UI
                 GamePlayManager.GetInstance.onGamWon -= OnGameWin;
             }
         }
+
         private void OnTapToPlayClick()
         {
             Activate(Screen.Gameplay);
@@ -127,12 +131,20 @@ namespace com.SuperJump.UI
             levelProgress.StopLevelprogress();
             Activate(Screen.Results);
             Deactivate(Screen.Gameplay);
+            nextBtn.gameObject.SetActive(false);
             winPanel.SetActive(true);
             loosePanel.SetActive(false);
+            Invoke(nameof(EnableNextButton), 4.0f);
         }
+
         public void OnPlayerJump(int value)
         {
             levelProgress.minValue = value - 1;
+        }
+
+        private void EnableNextButton()
+        {
+            nextBtn.gameObject.SetActive(true);
         }
     }
     public enum Screen
