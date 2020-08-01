@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameVariables;
 
 public class LevelManager : MonoBehaviour
 {
@@ -49,6 +50,11 @@ public class LevelManager : MonoBehaviour
         jumpPointIndex = 0;
         levelJumpPoints.Clear();
         levelJumpPoints = levelController.GetJumpPoints();
+    }
+
+    public ControlType GetLevelControlType()
+    {
+        return currentLevelController.GetLevelControlType();
     }
 
     public Transform GetNextJumpPoint()

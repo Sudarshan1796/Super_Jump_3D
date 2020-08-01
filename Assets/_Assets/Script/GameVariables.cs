@@ -8,4 +8,10 @@ public static class GameVariables
         Playing,
         GameOver
     }
+
+    public enum ControlType : short
+    {
+        OneTap,
+        TwoTap
+    }
 }
