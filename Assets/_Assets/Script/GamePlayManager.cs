@@ -24,6 +24,7 @@ public class GamePlayManager : MonoBehaviour
     internal Action gameStart;
     internal Action onStartJump;
     internal Action onFinishJump;
+
     private void Awake()
     {
         if (!Application.isEditor)

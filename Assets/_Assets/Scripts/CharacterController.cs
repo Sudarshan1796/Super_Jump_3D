@@ -1,5 +1,6 @@
 ﻿using com.SuperJump.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static GameVariables;
 
@@ -11,19 +12,25 @@ public class CharacterController : MonoBehaviour
                   jumpAngle = 45.0f,
                   gravity = 9.8f,
                   jumpTimeScaleFactor = 0.3f;
+    [SerializeField] private GameObject dummyCharacterPrefab;
+    [SerializeField] private Transform characterBody;
+    [SerializeField] private List<Transform> dummyCharactersPositions;
 
     private GamePlayManager gamePlayManager;
     private Transform jumpPoint;
     private Animator animator;
     private Rigidbody playerRigidBody;
+    private Quaternion initialCharcterBodyRotation;
     private LTDescr leanTweenObject;
     private Vector3 initialPosition;
     private Vector3 targetJumpPosition;
     private Coroutine resetTimeScaleCoroutine;
+    private List<GameObject> dummyCharacters;
     private ControlType controlType;
     private float initialSlowMotionTimeScale;
     private float finalSlowMotionTimeScale;
     private int lastPlayedAnimationIndex = -1;
+    private bool isMoving;
     private bool isJumping;
     private bool isSlowMotionTriggered;
     private bool isInitialSlowMotionGoingOn;
@@ -56,6 +63,7 @@ public class CharacterController : MonoBehaviour
     private void Awake()
     {
         gamePlayManager = GamePlayManager.GetInstance;
+        initialCharcterBodyRotation = characterBody.rotation;
         playerRigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -89,19 +97,31 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            leanTweenObject.pause();
-            animator.SetTrigger(lose);
-            gamePlayManager.OnGameOver(false);
+            if(isJumping)
+            {
+                animator.speed = 0;
+                leanTweenObject.pause();
+                gamePlayManager.OnGameOver(false);
+            }
+            else
+            {
+                leanTweenObject.pause();
+                animator.speed = 0;
+                gamePlayManager.OnGameOver(false);
+            }
         }
     }
 
     public void Init()
     {
         SetTimeScale(1);
+        characterBody.rotation = initialCharcterBodyRotation;
+        DestroyDummyCharacters();
         animator.speed = 1;
         transform.position = Vector3.zero;
         controlType = LevelManager.GetIntance.GetLevelControlType();
-        GetNextJumpingPoint();
+        isJumping = false;
+        GetNextDestinationPoint();
         animator.SetTrigger(idle);
     }
 
@@ -122,16 +142,16 @@ public class CharacterController : MonoBehaviour
 
     private void OneTapControl()
     {
-        if (!isJumping && Input.GetMouseButtonDown(0))
+        if (!isMoving && Input.GetMouseButtonDown(0))
         {
-            isJumping = true;
+            isMoving = true;
             initialPosition = transform.position;
-            leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear).setOnComplete(GetNextJumpingPoint);
+            leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
             PlayRandomJumpAnimation();
             gamePlayManager.Jump(true);
         }
 
-        if (!isSlowMotionTriggered && isJumping && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.6f)
+        if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.6f)
         {
             isSlowMotionTriggered = true;
             SetTimeScale(initialSlowMotionTimeScale);
@@ -145,9 +165,9 @@ public class CharacterController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isJumping)
+            if (!isMoving)
             {
-                isJumping = true;
+                isMoving = true;
                 initialPosition = transform.position;
                 leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear);
                 leanTweenObject.resume();
@@ -165,7 +185,7 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-        if (!isSlowMotionTriggered && isJumping && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.65f)
+        if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.65f)
         {
             isSlowMotionTriggered = true;
             SetTimeScale(initialSlowMotionTimeScale * 0.5f);
@@ -175,6 +195,7 @@ public class CharacterController : MonoBehaviour
 
     IEnumerator Jump()
     {
+        isJumping = true;
         targetJumpPosition        = transform.position + new Vector3(0, 0, 5);
         float target_Distance     = Vector3.Distance(transform.position, targetJumpPosition);
         float projectile_Velocity = target_Distance / (Mathf.Sin(2 * jumpAngle * Mathf.Deg2Rad) / gravity);
@@ -183,7 +204,7 @@ public class CharacterController : MonoBehaviour
         float flightDuration      = target_Distance / Vx;
         float elapse_time         = 0;
 
-        while (elapse_time < flightDuration)
+        while (elapse_time < flightDuration && gamePlayManager.gamePlayState != GamePlayState.GameOver)
         {
             transform.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
@@ -192,18 +213,19 @@ public class CharacterController : MonoBehaviour
             yield return null;
             if (elapse_time > flightDuration * 0.3f)
             {
-                LeanTween.move(gameObject, jumpPoint.localPosition, speed * 0.5f).setEase(LeanTweenType.linear).setOnComplete(GetNextJumpingPoint);
+                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed * 0.5f).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
                 SetTimeScale(1);
+                isJumping = false;
                 break;
             }
         }
     }
 
-    private void GetNextJumpingPoint()
+    private void GetNextDestinationPoint()
     {
         if (LevelManager.GetIntance.jumpPointIndex < LevelManager.GetIntance.GetTotalJumpPointsCount())
-         {
-            isJumping = false;
+        {
+            isMoving = false;
             isSlowMotionTriggered = false;
             jumpPoint = LevelManager.GetIntance.GetNextJumpPoint();
             LevelManager.GetIntance.jumpPointIndex++;
@@ -215,6 +237,7 @@ public class CharacterController : MonoBehaviour
             LevelManager.GetIntance.BlastFinalDestroyableObject();
             gamePlayManager.OnGameOver(true);
             animator.SetTrigger(win);
+            Celebrate();
         }
         gamePlayManager.Jump(false);
     }
@@ -228,7 +251,7 @@ public class CharacterController : MonoBehaviour
     {
         isInitialSlowMotionGoingOn = true;
         yield return new WaitForSecondsRealtime(resetTime);
-        leanTweenObject.setOnComplete(GetNextJumpingPoint);
+        leanTweenObject.setOnComplete(GetNextDestinationPoint);
         SetTimeScale(1);
         //Time.fixedDeltaTime *= slowFactor;
         //Time.maximumDeltaTime *= slowFactor;
@@ -296,6 +319,35 @@ public class CharacterController : MonoBehaviour
                 {
                     return val;
                 }
+            }
+        }
+    }
+
+    private void Celebrate()
+    {
+        var camPos = Camera.main.transform.position;
+        camPos.y = 0;
+        characterBody.LookAt(camPos);
+        if(dummyCharacters == null)
+        {
+            dummyCharacters=new List<GameObject>();
+        }
+
+        for (int i = 0; i < dummyCharactersPositions.Count; i++)
+        {
+            GameObject dummyCharacter = Instantiate(dummyCharacterPrefab, dummyCharactersPositions[i]);
+            dummyCharacters.Add(dummyCharacter);
+            LeanTween.moveLocal(dummyCharacter, dummyCharactersPositions[i].localPosition, 0.5f).setEase(LeanTweenType.linear);
+        }
+    }
+
+    private void DestroyDummyCharacters()
+    {
+        if (dummyCharacters != null && dummyCharacters.Count > 0)
+        {
+            foreach (var dummyCharacter in dummyCharacters)
+            {
+                Destroy(dummyCharacter);
             }
         }
     }
