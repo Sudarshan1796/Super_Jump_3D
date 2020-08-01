@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 public static class GameVariables
 {
     public enum GamePlayState : short
@@ -13,5 +15,11 @@ public static class GameVariables
     {
         OneTap,
         TwoTap
+    }
+
+    [System.Serializable]
+    public class CharacterColor
+    {
+        public Color color;
     }
 }

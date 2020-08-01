@@ -12,9 +12,11 @@ public class CharacterController : MonoBehaviour
                   jumpAngle = 45.0f,
                   gravity = 9.8f,
                   jumpTimeScaleFactor = 0.3f;
+    [SerializeField] private SkinnedMeshRenderer characterMesh;
     [SerializeField] private GameObject dummyCharacterPrefab;
     [SerializeField] private Transform characterBody;
     [SerializeField] private List<Transform> dummyCharactersPositions;
+    [SerializeField] private List<CharacterColor> characterColors;
 
     private GamePlayManager gamePlayManager;
     private Transform jumpPoint;
@@ -29,6 +31,7 @@ public class CharacterController : MonoBehaviour
     private ControlType controlType;
     private float initialSlowMotionTimeScale;
     private float finalSlowMotionTimeScale;
+    private int lastAddedColorIndex = -1;
     private int lastPlayedAnimationIndex = -1;
     private bool isMoving;
     private bool isJumping;
@@ -112,8 +115,13 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Init(bool isRestart = false)
     {
+        if(!isRestart)
+        {
+            SetCharacterColor();
+        }
+
         SetTimeScale(1);
         characterBody.rotation = initialCharcterBodyRotation;
         DestroyDummyCharacters();
@@ -185,7 +193,7 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-        if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.65f)
+        if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.60f)
         {
             isSlowMotionTriggered = true;
             SetTimeScale(initialSlowMotionTimeScale * 0.5f);
@@ -256,6 +264,39 @@ public class CharacterController : MonoBehaviour
         //Time.fixedDeltaTime *= slowFactor;
         //Time.maximumDeltaTime *= slowFactor;
         isInitialSlowMotionGoingOn = false;
+    }
+
+    private void SetCharacterColor()
+    {
+        lastAddedColorIndex = GetRandomColorIndex();
+        characterMesh.sharedMaterial.color = characterColors[lastAddedColorIndex].color;
+
+        int GetRandomColorIndex()
+        {
+            if (lastAddedColorIndex == -1)
+            {
+                return Random.Range(0, characterColors.Count);
+            }
+            else
+            {
+                var val = Random.Range(0, characterColors.Count);
+                if (val == lastAddedColorIndex)
+                {
+                    if (val < characterColors.Count)
+                    {
+                        return val + 1;
+                    }
+                    else
+                    {
+                        return val - 1;
+                    }
+                }
+                else
+                {
+                    return val;
+                }
+            }
+        }
     }
 
     private void PlayInitialJumpAnimtionForTwoTap()

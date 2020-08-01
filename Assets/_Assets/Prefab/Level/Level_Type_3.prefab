@@ -13863,6 +13863,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6882263856809859822}
   - component: {fileID: 5400829999480313160}
+  - component: {fileID: 5209881422945735892}
   m_Layer: 0
   m_Name: ObstacleType_3
   m_TagString: Untagged
@@ -13897,6 +13898,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &5209881422945735892
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309526881713729723}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &526650256371325031
 GameObject:
   m_ObjectHideFlags: 0
@@ -60456,7 +60473,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 0deda38182eb3ca48b22d0ad632d4c80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -60564,7 +60581,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70109,7 +70126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 9a4afe56125510b479c5d1ea0d85e2dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93492,6 +93509,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1362099157327491093}
   - component: {fileID: 5683088347384431948}
+  - component: {fileID: 5298458918716257600}
   m_Layer: 0
   m_Name: ObstacleType_5
   m_TagString: Untagged
@@ -93526,6 +93544,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &5298458918716257600
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304730121298356571}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &3340924847058867376
 GameObject:
   m_ObjectHideFlags: 0
@@ -93585,7 +93619,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 20983276370ff3f478e5cf38bbd1e890, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93644,6 +93678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1874518209919245253}
   - component: {fileID: 3139750707740648179}
+  - component: {fileID: 5009429597505352294}
   m_Layer: 0
   m_Name: ObstacleType_2
   m_TagString: Untagged
@@ -93678,6 +93713,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &5009429597505352294
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3367510189482608516}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &3418397256828098938
 GameObject:
   m_ObjectHideFlags: 0
@@ -103338,6 +103389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5118227786133719825}
   - component: {fileID: 1635577957218215975}
+  - component: {fileID: 6846186963776234337}
   m_Layer: 0
   m_Name: ObstacleType_9
   m_TagString: Untagged
@@ -103372,6 +103424,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &6846186963776234337
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179323397251128843}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &4214956789655308478
 GameObject:
   m_ObjectHideFlags: 0
@@ -103389,7 +103457,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5857830647753025105
 Transform:
@@ -103473,6 +103541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4633812134762421143}
   - component: {fileID: 3359187657717370698}
+  - component: {fileID: 3814130754147910789}
   m_Layer: 0
   m_Name: ObstacleType_8
   m_TagString: Untagged
@@ -103507,6 +103576,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &3814130754147910789
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260323847952400310}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &4294962680609073677
 GameObject:
   m_ObjectHideFlags: 0
@@ -113017,7 +113102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: bbe4294b5b50d534cb08f14b385a541f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113125,7 +113210,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 20cd597026095b242a96c1e11705414a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113234,7 +113319,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113308,6 +113393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1071514015000636667}
   - component: {fileID: 7109103550917769118}
+  - component: {fileID: 3157150297645513848}
   m_Layer: 0
   m_Name: ObstacleType_7
   m_TagString: Untagged
@@ -113342,6 +113428,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &3157150297645513848
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317650933111509393}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &5329071430819432253
 GameObject:
   m_ObjectHideFlags: 0
@@ -113387,6 +113489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2284249266283562474}
   - component: {fileID: 7418089026705067908}
+  - component: {fileID: 9075640636242615176}
   m_Layer: 0
   m_Name: ObstacleType_4
   m_TagString: Untagged
@@ -113421,6 +113524,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &9075640636242615176
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609405497798457729}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &5655119179671412353
 GameObject:
   m_ObjectHideFlags: 0
@@ -122752,7 +122871,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 246f3271bbe2a8740bf12f744dae0779, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122861,7 +122980,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 20983276370ff3f478e5cf38bbd1e890, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122936,6 +123055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8073139388487294732}
   - component: {fileID: 6412194864477453624}
+  - component: {fileID: 1871572053665239627}
   m_Layer: 0
   m_Name: ObstacleType_10
   m_TagString: Untagged
@@ -122970,6 +123090,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1871572053665239627
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6103936343746576273}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &6176074905160539967
 GameObject:
   m_ObjectHideFlags: 0
@@ -123029,7 +123165,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: c6839c478c7f27646a9f8961d06566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127774,7 +127910,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 20983276370ff3f478e5cf38bbd1e890, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137223,7 +137359,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: c6839c478c7f27646a9f8961d06566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137298,6 +137434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 793417485389197452}
   - component: {fileID: 8260119629903424272}
+  - component: {fileID: 6287918206070694329}
   m_Layer: 0
   m_Name: ObstacleType_1
   m_TagString: Untagged
@@ -137332,6 +137469,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &6287918206070694329
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6925311880946472998}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &6937958370630216365
 GameObject:
   m_ObjectHideFlags: 0
@@ -146789,7 +146942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: c6839c478c7f27646a9f8961d06566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147087,7 +147240,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: b84eed4eedcd6134a9c1bbb7bb593b23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147273,7 +147426,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 0deda38182eb3ca48b22d0ad632d4c80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147381,7 +147534,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 246f3271bbe2a8740bf12f744dae0779, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152433,6 +152586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1101256417114413703}
   - component: {fileID: 5878784571968496907}
+  - component: {fileID: 1097264809552102899}
   m_Layer: 0
   m_Name: ObstacleType_6
   m_TagString: Untagged
@@ -152467,6 +152621,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82939577bf815ca44beb00f4ea186d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1097264809552102899
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8158716159415972347}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &8247253166891459643
 GameObject:
   m_ObjectHideFlags: 0
@@ -157107,7 +157277,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed5b3de05a80472418e39fc44ea081ed, type: 2}
+  - {fileID: 2100000, guid: 0deda38182eb3ca48b22d0ad632d4c80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157672,15 +157842,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7220f734da869ae4ebcff6ec88fdefb6, type: 3}
---- !u!4 &7838108312613703722 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4985189981174158, guid: 7220f734da869ae4ebcff6ec88fdefb6,
-    type: 3}
-  m_PrefabInstance: {fileID: 7842803227620239780}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &7932600179559924370 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198574197344693046, guid: 7220f734da869ae4ebcff6ec88fdefb6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7842803227620239780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7838108312613703722 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4985189981174158, guid: 7220f734da869ae4ebcff6ec88fdefb6,
     type: 3}
   m_PrefabInstance: {fileID: 7842803227620239780}
   m_PrefabAsset: {fileID: 0}
@@ -157822,12 +157992,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4524020d60ba642b85b912eecb0537, type: 3}
---- !u!4 &2848127947118002846 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6073304938299157732, guid: 0f4524020d60ba642b85b912eecb0537,
-    type: 3}
-  m_PrefabInstance: {fileID: 8344646667913834106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2848127947118002844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6073304938299157734, guid: 0f4524020d60ba642b85b912eecb0537,
@@ -157840,3 +158004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ece859dbd35f54392e915a8d1f03b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2848127947118002846 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6073304938299157732, guid: 0f4524020d60ba642b85b912eecb0537,
+    type: 3}
+  m_PrefabInstance: {fileID: 8344646667913834106}
+  m_PrefabAsset: {fileID: 0}

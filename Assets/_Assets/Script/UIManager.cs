@@ -88,12 +88,14 @@ namespace com.SuperJump.UI
             SetLevelText();
             GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
         }
+
         private void SetLevelText()
         {
             var count = LevelManager.GetIntance.currentLevel;
             curLvltext.text = count.ToString();
             nextLvlText.text = (count + 1).ToString();
         }
+
         private void OnRetryClick()
         {
             GamePlayManager.GetInstance.RestartGame();
@@ -101,9 +103,10 @@ namespace com.SuperJump.UI
             Deactivate(Screen.Results);
             levelProgress.StartLevel();
             SetLevelText();
-            CharacterController.GetInstance.Init();
+            CharacterController.GetInstance.Init(true);
             GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
         }
+
         private void OnNextLevelClick()
         {
             GamePlayManager.GetInstance.RestartGame();
@@ -114,6 +117,7 @@ namespace com.SuperJump.UI
             CharacterController.GetInstance.Init();
             GamePlayManager.GetInstance.gamePlayState = GameVariables.GamePlayState.Playing;
         }
+
         private void OnGameLoose()
         {
             //GameUpdater.GetInstance.RemoveAllUpdate();
@@ -124,6 +128,7 @@ namespace com.SuperJump.UI
             loosePanel.SetActive(true);
             winPanel.SetActive(false);
         }
+
         private void OnGameWin()
         {
             //GameUpdater.GetInstance.RemoveAllUpdate();
@@ -147,6 +152,7 @@ namespace com.SuperJump.UI
             nextBtn.gameObject.SetActive(true);
         }
     }
+
     public enum Screen
     {
         Loading,
