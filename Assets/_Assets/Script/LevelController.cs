@@ -8,6 +8,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private ControlType controlType;
     [SerializeField] private List<Transform> jumpPoints;
     [SerializeField] private List<ParticleSystem> winParticleEffects;
+    [SerializeField] private FinalDestructibleObject finalDestroyableObject;
 
     public ControlType GetLevelControlType()
     {
@@ -22,5 +23,10 @@ public class LevelController : MonoBehaviour
     public List<ParticleSystem> GetWinParticleEffects()
     {
         return winParticleEffects;
+    }
+
+    public void BlastFinalObject()
+    {
+        finalDestroyableObject.BlastFinalObject();
     }
 }

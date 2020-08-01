@@ -74,7 +74,7 @@ public class GamePlayManager : MonoBehaviour
         {
             //SDK_Initialiser.LevelSuccessEvent(ScoreAndLevelManager.GetInstance.GetGameLevel());
             onGamWon?.Invoke();
-            LevelManager.GetIntance.PlayWinParticleEffects();
+            StartCoroutine(LevelManager.GetIntance.PlayWinParticleEffects());
         }
         else
         {

@@ -67,6 +67,11 @@ public class LevelManager : MonoBehaviour
         return levelJumpPoints.Count;
     }
 
+    public void BlastFinalDestroyableObject()
+    {
+        currentLevelController.BlastFinalObject();
+    }
+
     public void LoadLevel()
     {
         if(currentLoadedevel != null)
@@ -81,8 +86,9 @@ public class LevelManager : MonoBehaviour
         currentLoadedevel.SetActive(true);
     }
 
-    public void PlayWinParticleEffects()
+    public IEnumerator PlayWinParticleEffects()
     {
+        yield return new WaitForSeconds(1.5f);
         foreach (var particleEffect in currentLevelController.GetWinParticleEffects())
         {
             particleEffect.Play();

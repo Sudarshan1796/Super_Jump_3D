@@ -89,24 +89,16 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            if(isJumping)
-            {
-                StopAllCoroutines();
-                SetTimeScale(0);
-                gamePlayManager.OnGameOver(false);
-            }
-            else
-            {
-                leanTweenObject.pause();
-                animator.SetTrigger(lose);
-                gamePlayManager.OnGameOver(false);
-            }
+            leanTweenObject.pause();
+            animator.SetTrigger(lose);
+            gamePlayManager.OnGameOver(false);
         }
     }
 
     public void Init()
     {
         SetTimeScale(1);
+        animator.speed = 1;
         transform.position = Vector3.zero;
         controlType = LevelManager.GetIntance.GetLevelControlType();
         GetNextJumpingPoint();
@@ -220,6 +212,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            LevelManager.GetIntance.BlastFinalDestroyableObject();
             gamePlayManager.OnGameOver(true);
             animator.SetTrigger(win);
         }
@@ -245,6 +238,7 @@ public class CharacterController : MonoBehaviour
     private void PlayInitialJumpAnimtionForTwoTap()
     {
         animator.SetTrigger(jump_3);
+        lastPlayedAnimationIndex = 2;
     }
 
     private void PlayRandomJumpAnimation()
@@ -280,36 +274,14 @@ public class CharacterController : MonoBehaviour
 
         int GetRandomAnimationIndex()
         {
-            if (controlType == ControlType.OneTap)
+            if (lastPlayedAnimationIndex == -1)
             {
-                if (lastPlayedAnimationIndex == -1)
-                {
-                    return Random.Range(0, 7);
-                }
-                else
-                {
-                    var val = Random.Range(0, 7);
-                    if (val == lastPlayedAnimationIndex)
-                    {
-                        if (val < 7)
-                        {
-                            return val + 1;
-                        }
-                        else
-                        {
-                            return val - 1;
-                        }
-                    }
-                    else
-                    {
-                        return val;
-                    }
-                }
+                return Random.Range(0, 7);
             }
             else
             {
                 var val = Random.Range(0, 7);
-                if (val == lastPlayedAnimationIndex || val == 3)
+                if (val == lastPlayedAnimationIndex)
                 {
                     if (val < 7)
                     {
