@@ -7,14 +7,14 @@ using static GameVariables;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 0.6f,
-                  slowFactor = 20,
+    private float moveTime = 0.6f,
                   jumpAngle = 45.0f,
-                  gravity = 9.8f,
-                  jumpTimeScaleFactor = 0.3f;
+                  gravity = 9.8f;
     [SerializeField] private SkinnedMeshRenderer characterMesh;
     [SerializeField] private GameObject dummyCharacterPrefab;
+    [SerializeField] private GameObject ragDollPrefab;
     [SerializeField] private Transform characterBody;
+    [SerializeField] private Transform dummyCharacterParent;
     [SerializeField] private List<Transform> dummyCharactersPositions;
     [SerializeField] private List<CharacterColor> characterColors;
 
@@ -27,18 +27,24 @@ public class CharacterController : MonoBehaviour
     private Vector3 initialPosition;
     private Vector3 targetJumpPosition;
     private Coroutine resetTimeScaleCoroutine;
-    private List<GameObject> dummyCharacters;
+    private List<Animator> dummyCharactersAnimators;
+    private List<Transform> dummyCharacters;
+    private List<GameObject> ragDolls;
     private ControlType controlType;
-    private float initialSlowMotionTimeScale;
-    private float finalSlowMotionTimeScale;
     private int lastAddedColorIndex = -1;
     private int lastPlayedAnimationIndex = -1;
+    private int dummyCharacterIndex = 0;
+    private int dummyCharacterIntstantiatingCounter = 0;
     private bool isMoving;
     private bool isJumping;
     private bool isSlowMotionTriggered;
     private bool isInitialSlowMotionGoingOn;
 
-    private readonly int idle = Animator.StringToHash("Idle");
+    private readonly float oneTapSlowMotionMultiplier = 15;
+    private readonly float twoTapSlowMotionMultiplier = 30;
+    private readonly float jumpSlowMotionMultiplier = 0.125f;
+
+    private readonly int idle   = Animator.StringToHash("Idle");
     private readonly int jump_1 = Animator.StringToHash("Jump_1");
     private readonly int jump_2 = Animator.StringToHash("Jump_2");
     private readonly int jump_3 = Animator.StringToHash("Jump_3");
@@ -47,8 +53,8 @@ public class CharacterController : MonoBehaviour
     private readonly int jump_6 = Animator.StringToHash("Jump_6");
     private readonly int jump_7 = Animator.StringToHash("Jump_7");
     private readonly int jump_8 = Animator.StringToHash("Jump_8");
-    private readonly int lose = Animator.StringToHash("Lose");
-    private readonly int win = Animator.StringToHash("Win");
+    private readonly int lose   = Animator.StringToHash("Lose");
+    private readonly int win    = Animator.StringToHash("Win");
 
     private static CharacterController instance;
     public static CharacterController GetInstance
@@ -65,16 +71,14 @@ public class CharacterController : MonoBehaviour
 
     private void Awake()
     {
-        gamePlayManager = GamePlayManager.GetInstance;
+        gamePlayManager             = GamePlayManager.GetInstance;
         initialCharcterBodyRotation = characterBody.rotation;
-        playerRigidBody = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        playerRigidBody             = GetComponent<Rigidbody>();
+        animator                    = GetComponent<Animator>();
     }
 
     void Start()
     {
-        initialSlowMotionTimeScale = Time.timeScale / slowFactor;
-        finalSlowMotionTimeScale = Time.timeScale / (slowFactor * jumpTimeScaleFactor);
         Init();
     }
 
@@ -96,6 +100,7 @@ public class CharacterController : MonoBehaviour
         {
             leanTweenObject.pause();
             animator.SetTrigger(lose);
+            PlayDummyCharacterAnimation(lose);
             gamePlayManager.OnGameOver(false);
         }
         else
@@ -103,6 +108,7 @@ public class CharacterController : MonoBehaviour
             if(isJumping)
             {
                 animator.speed = 0;
+                PlayDummyCharacterAnimation(0, 0, true);
                 leanTweenObject.pause();
                 gamePlayManager.OnGameOver(false);
             }
@@ -110,6 +116,7 @@ public class CharacterController : MonoBehaviour
             {
                 leanTweenObject.pause();
                 animator.speed = 0;
+                PlayDummyCharacterAnimation(0, 0, true);
                 gamePlayManager.OnGameOver(false);
             }
         }
@@ -122,10 +129,16 @@ public class CharacterController : MonoBehaviour
             SetCharacterColor();
         }
 
-        SetTimeScale(1);
+        gameObject.SetActive(true);
         characterBody.rotation = initialCharcterBodyRotation;
         DestroyDummyCharacters();
+        DestroyRagDolls();
+        if (dummyCharacters == null || dummyCharacters.Count == 0)
+        {
+            dummyCharacters = LevelManager.GetIntance.GetDummyCharactersInCurrentLevel();
+        }
         animator.speed = 1;
+        dummyCharacterIntstantiatingCounter = 0;
         transform.position = Vector3.zero;
         controlType = LevelManager.GetIntance.GetLevelControlType();
         isJumping = false;
@@ -154,7 +167,7 @@ public class CharacterController : MonoBehaviour
         {
             isMoving = true;
             initialPosition = transform.position;
-            leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
+            leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, moveTime).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
             PlayRandomJumpAnimation();
             gamePlayManager.Jump(true);
         }
@@ -162,10 +175,8 @@ public class CharacterController : MonoBehaviour
         if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.6f)
         {
             isSlowMotionTriggered = true;
-            SetTimeScale(initialSlowMotionTimeScale);
-            //Time.fixedDeltaTime /= slowFactor;
-            //Time.maximumDeltaTime /= slowFactor;
-            StartCoroutine(ResetTimeScale(0.5f));
+            StartLeanTweenSlowMotion(leanTweenObject,oneTapSlowMotionMultiplier, false);
+            StartCoroutine(ResetTimeScale(0.6f));
         }
     }
 
@@ -177,8 +188,7 @@ public class CharacterController : MonoBehaviour
             {
                 isMoving = true;
                 initialPosition = transform.position;
-                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed).setEase(LeanTweenType.linear);
-                leanTweenObject.resume();
+                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, moveTime).setEase(LeanTweenType.linear);
                 PlayInitialJumpAnimtionForTwoTap();
                 gamePlayManager.Jump(true);
             }
@@ -188,7 +198,7 @@ public class CharacterController : MonoBehaviour
                 leanTweenObject.pause();
                 StopCoroutine(resetTimeScaleCoroutine);
                 isInitialSlowMotionGoingOn = false;
-                SetTimeScale(finalSlowMotionTimeScale);
+                StartTwoTapSlowMotion(false);
                 StartCoroutine(Jump());
             }
         }
@@ -196,7 +206,7 @@ public class CharacterController : MonoBehaviour
         if (!isSlowMotionTriggered && isMoving && Vector3.Distance(transform.position, jumpPoint.position) <= Vector3.Distance(initialPosition, jumpPoint.position) * 0.60f)
         {
             isSlowMotionTriggered = true;
-            SetTimeScale(initialSlowMotionTimeScale * 0.5f);
+            StartLeanTweenSlowMotion(leanTweenObject, twoTapSlowMotionMultiplier, false);
             resetTimeScaleCoroutine = StartCoroutine(ResetTimeScale(2));
         }
     }
@@ -204,25 +214,25 @@ public class CharacterController : MonoBehaviour
     IEnumerator Jump()
     {
         isJumping = true;
-        targetJumpPosition        = transform.position + new Vector3(0, 0, 5);
+        targetJumpPosition        = transform.position + new Vector3(0, 0, 3.5f);
         float target_Distance     = Vector3.Distance(transform.position, targetJumpPosition);
-        float projectile_Velocity = target_Distance / (Mathf.Sin(2 * jumpAngle * Mathf.Deg2Rad) / gravity);
-        float Vx                  = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(jumpAngle * Mathf.Deg2Rad);
-        float Vy                  = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(jumpAngle * Mathf.Deg2Rad);
+        float jumpVelocity        = target_Distance / (Mathf.Sin(2 * jumpAngle * Mathf.Deg2Rad) / gravity);
+        float Vx                  = Mathf.Sqrt(jumpVelocity) * Mathf.Cos(jumpAngle * Mathf.Deg2Rad);
+        float Vy                  = Mathf.Sqrt(jumpVelocity) * Mathf.Sin(jumpAngle * Mathf.Deg2Rad);
         float flightDuration      = target_Distance / Vx;
         float elapse_time         = 0;
 
         while (elapse_time < flightDuration && gamePlayManager.gamePlayState != GamePlayState.GameOver)
         {
-            transform.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
+            transform.Translate(0, (Vy - (gravity * elapse_time)) * jumpSlowMotionMultiplier * Time.deltaTime, Vx * jumpSlowMotionMultiplier * Time.deltaTime);
 
-            elapse_time += Time.deltaTime;
+            elapse_time += Time.deltaTime * jumpSlowMotionMultiplier;
 
             yield return null;
-            if (elapse_time > flightDuration * 0.3f)
+            if (elapse_time > flightDuration * 0.275f)
             {
-                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, speed * 0.5f).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
-                SetTimeScale(1);
+                leanTweenObject = LeanTween.move(gameObject, jumpPoint.localPosition, moveTime * 0.5f).setEase(LeanTweenType.linear).setOnComplete(GetNextDestinationPoint);
+                StartTwoTapSlowMotion(true);
                 isJumping = false;
                 break;
             }
@@ -233,6 +243,11 @@ public class CharacterController : MonoBehaviour
     {
         if (LevelManager.GetIntance.jumpPointIndex < LevelManager.GetIntance.GetTotalJumpPointsCount())
         {
+            dummyCharacterIntstantiatingCounter += 1;
+            if(dummyCharacterIntstantiatingCounter % 3 == 0)
+            {
+                ReParentDummyCharacter();
+            }
             isMoving = false;
             isSlowMotionTriggered = false;
             jumpPoint = LevelManager.GetIntance.GetNextJumpPoint();
@@ -245,14 +260,36 @@ public class CharacterController : MonoBehaviour
             LevelManager.GetIntance.BlastFinalDestroyableObject();
             gamePlayManager.OnGameOver(true);
             animator.SetTrigger(win);
+            PlayDummyCharacterAnimation(win);
             Celebrate();
         }
         gamePlayManager.Jump(false);
     }
-
-    private void SetTimeScale(float val)
+  
+    private void StartLeanTweenSlowMotion(LTDescr leanTweenObj, float slowMotionMultiplier, bool shouldReset)
     {
-        Time.timeScale = val;
+        if (!shouldReset)
+        {
+            leanTweenObj.setTime(leanTweenObj.time * slowMotionMultiplier);
+            SetAnimatorSpeed(animator.speed / slowMotionMultiplier);
+        }
+        else
+        {
+            leanTweenObj.setTime(leanTweenObj.time / slowMotionMultiplier);
+            SetAnimatorSpeed(1);
+        }
+    }
+
+    private void StartTwoTapSlowMotion(bool shouldReset)
+    {
+        if (!shouldReset)
+        {
+            SetAnimatorSpeed(animator.speed * (twoTapSlowMotionMultiplier * 0.15f));
+        }
+        else
+        {
+            SetAnimatorSpeed(1);
+        }
     }
 
     private IEnumerator ResetTimeScale(float resetTime)
@@ -260,9 +297,14 @@ public class CharacterController : MonoBehaviour
         isInitialSlowMotionGoingOn = true;
         yield return new WaitForSecondsRealtime(resetTime);
         leanTweenObject.setOnComplete(GetNextDestinationPoint);
-        SetTimeScale(1);
-        //Time.fixedDeltaTime *= slowFactor;
-        //Time.maximumDeltaTime *= slowFactor;
+        if (controlType == ControlType.OneTap)
+        {
+            StartLeanTweenSlowMotion(leanTweenObject,oneTapSlowMotionMultiplier, true);
+        }
+        else
+        {
+            StartLeanTweenSlowMotion(leanTweenObject,twoTapSlowMotionMultiplier, true);
+        }
         isInitialSlowMotionGoingOn = false;
     }
 
@@ -282,7 +324,7 @@ public class CharacterController : MonoBehaviour
                 var val = Random.Range(0, characterColors.Count);
                 if (val == lastAddedColorIndex)
                 {
-                    if (val < characterColors.Count)
+                    if (val < characterColors.Count - 1)
                     {
                         return val + 1;
                     }
@@ -299,9 +341,22 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void SetAnimatorSpeed(float speed)
+    {
+        animator.speed = speed;
+        if(dummyCharactersAnimators != null && dummyCharactersAnimators.Count > 0)
+        {
+            foreach(var animator in dummyCharactersAnimators)
+            {
+                animator.speed = speed;
+            }
+        }
+    }
+
     private void PlayInitialJumpAnimtionForTwoTap()
     {
         animator.SetTrigger(jump_3);
+        PlayDummyCharacterAnimation(jump_3);
         lastPlayedAnimationIndex = 2;
     }
 
@@ -312,27 +367,35 @@ public class CharacterController : MonoBehaviour
         {
             case 0:
                 animator.SetTrigger(jump_1);
+                PlayDummyCharacterAnimation(jump_1);
                 break;
             case 1:
                 animator.SetTrigger(jump_2);
+                PlayDummyCharacterAnimation(jump_2);
                 break;
             case 2:
                 animator.SetTrigger(jump_3);
+                PlayDummyCharacterAnimation(jump_3);
                 break;
             case 3:
                 animator.SetTrigger(jump_4);
+                PlayDummyCharacterAnimation(jump_4);
                 break;
             case 4:
                 animator.SetTrigger(jump_5);
+                PlayDummyCharacterAnimation(jump_5);
                 break;
             case 5:
                 animator.SetTrigger(jump_6);
+                PlayDummyCharacterAnimation(jump_6);
                 break;
             case 6:
                 animator.SetTrigger(jump_7);
+                PlayDummyCharacterAnimation(jump_7);
                 break;
             case 7:
                 animator.SetTrigger(jump_8);
+                PlayDummyCharacterAnimation(jump_8);
                 break;
         }
 
@@ -364,21 +427,91 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void PlayDummyCharacterAnimation(int val, float speed = 1, bool shouldSetSpeed = false)
+    {
+        if (dummyCharactersAnimators != null && dummyCharactersAnimators.Count > 0)
+        {
+            if (!shouldSetSpeed)
+            {
+                foreach (var anim in dummyCharactersAnimators)
+                {
+                    anim.SetTrigger(val);
+                }
+            }
+            else
+            {
+                foreach (var anim in dummyCharactersAnimators)
+                {
+                    anim.speed = speed;
+                }
+            }
+        }
+    }
+
+    private void ReParentDummyCharacter()
+    {
+        if(dummyCharactersAnimators == null)
+        {
+            dummyCharactersAnimators = new List<Animator>();
+        }
+
+        var dummyCharacterRotation = dummyCharacters[dummyCharacterIndex].localRotation;
+        dummyCharacters[dummyCharacterIndex].SetParent(dummyCharacterParent);
+        dummyCharacters[dummyCharacterIndex].localRotation = dummyCharacterRotation;
+        dummyCharacters[dummyCharacterIndex].localPosition = dummyCharactersPositions[dummyCharacterIndex].localPosition;
+        dummyCharactersAnimators.Add(dummyCharacters[dummyCharacterIndex].GetComponent<Animator>());
+        dummyCharacterIndex++;
+    }
+
     private void Celebrate()
     {
         var camPos = Camera.main.transform.position;
         camPos.y = 0;
         characterBody.LookAt(camPos);
-        if(dummyCharacters == null)
+
+        for (int i = 0; i < dummyCharacters.Count; i++)
         {
-            dummyCharacters=new List<GameObject>();
+            LeanTween.moveLocal(dummyCharacters[i].gameObject, dummyCharactersPositions[i].localPosition * 3, 0.5f).setEase(LeanTweenType.linear);
+        }
+    }
+
+    internal void InstantiateRagDolls()
+    {
+        if(ragDolls == null)
+        {
+            ragDolls = new List<GameObject>();
         }
 
-        for (int i = 0; i < dummyCharactersPositions.Count; i++)
+        var ragdoll = Instantiate(ragDollPrefab);
+        ragdoll.transform.position = transform.position;
+        ragdoll.transform.rotation = transform.rotation;
+        gameObject.SetActive(false);
+        ragdoll.SetActive(true);
+        ragDolls.Add(ragdoll);
+
+        if(dummyCharacterIndex > 0)
         {
-            GameObject dummyCharacter = Instantiate(dummyCharacterPrefab, dummyCharactersPositions[i]);
-            dummyCharacters.Add(dummyCharacter);
-            LeanTween.moveLocal(dummyCharacter, dummyCharactersPositions[i].localPosition, 0.5f).setEase(LeanTweenType.linear);
+            foreach(var dummyCharacter in dummyCharacters)
+            {
+                var ragdol = Instantiate(ragDollPrefab);
+                ragdol.transform.position = dummyCharacter.position;
+                ragdol.transform.rotation = dummyCharacter.rotation;
+                ragdol.SetActive(false);
+                ragdol.SetActive(true);
+                ragDolls.Add(ragdol);
+            }
+        }
+    }
+
+    private void DestroyRagDolls()
+    {
+        if (ragDolls != null && ragDolls.Count > 0)
+        {
+            foreach (var ragDoll in ragDolls)
+            {
+                Destroy(ragDoll);
+            }
+            ragDolls.Clear();
         }
     }
 
@@ -388,8 +521,13 @@ public class CharacterController : MonoBehaviour
         {
             foreach (var dummyCharacter in dummyCharacters)
             {
-                Destroy(dummyCharacter);
+                Destroy(dummyCharacter.gameObject);
             }
+
+            dummyCharacters.Clear();
+            if(dummyCharactersAnimators != null)
+            dummyCharactersAnimators.Clear();
+            dummyCharacterIndex = 0;
         }
     }
 }

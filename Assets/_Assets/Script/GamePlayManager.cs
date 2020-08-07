@@ -73,13 +73,12 @@ public class GamePlayManager : MonoBehaviour
         gamePlayState = GamePlayState.GameOver;
         if (isWon)
         {
-            //SDK_Initialiser.LevelSuccessEvent(ScoreAndLevelManager.GetInstance.GetGameLevel());
             onGamWon?.Invoke();
             StartCoroutine(LevelManager.GetIntance.PlayWinParticleEffects());
         }
         else
         {
-            //SDK_Initialiser.LevelFailEvent(ScoreAndLevelManager.GetInstance.GetGameLevel(), 0, UIManager.GetInstance.GetPlayerProgress());
+            CharacterController.GetInstance.InstantiateRagDolls();
             onGameLose?.Invoke();
         }
     }

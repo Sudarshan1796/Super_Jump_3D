@@ -86,6 +86,11 @@ public class LevelManager : MonoBehaviour
         currentLoadedevel.SetActive(true);
     }
 
+    public List<Transform> GetDummyCharactersInCurrentLevel()
+    {
+        return currentLevelController.GetDummyCharacters();
+    }
+
     public IEnumerator PlayWinParticleEffects()
     {
         yield return new WaitForSeconds(1.5f);

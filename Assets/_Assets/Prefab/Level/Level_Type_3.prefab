@@ -13843,7 +13843,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -18539,7 +18539,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -27875,7 +27875,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -37153,7 +37153,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -51079,6 +51079,7 @@ Transform:
   m_Children:
   - {fileID: 682716018634539885}
   - {fileID: 8542497047352199561}
+  - {fileID: 4491354237302008999}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51095,6 +51096,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlType: 0
+  dummyCharacters:
+  - {fileID: 5497007968392339253}
+  - {fileID: 8347927795891136693}
+  - {fileID: 6890075888470806575}
   jumpPoints:
   - {fileID: 682716019137181121}
   - {fileID: 682716019456664909}
@@ -55736,7 +55741,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -93489,7 +93494,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -98354,7 +98359,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -113033,7 +113038,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -122802,7 +122807,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -137289,7 +137294,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -152566,7 +152571,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 1, y: 1, z: 1}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
@@ -157716,6 +157721,99 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6991740501426771119}
+--- !u!1001 &1014810508919025595
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 682716019852671881}
+    m_Modifications:
+    - target: {fileID: 1548359291793861970, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_Name
+      value: Characters
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 203b093731f49eb4eb067e232657c9d8, type: 3}
+--- !u!4 &4491354237302008999 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3477106730149036828, guid: 203b093731f49eb4eb067e232657c9d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1014810508919025595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5497007968392339253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4781731369492934798, guid: 203b093731f49eb4eb067e232657c9d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1014810508919025595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6890075888470806575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5875828914164268948, guid: 203b093731f49eb4eb067e232657c9d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1014810508919025595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8347927795891136693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9064788229756077838, guid: 203b093731f49eb4eb067e232657c9d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1014810508919025595}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1134075650961938729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157773,15 +157871,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55302fb0a0b483949b0ef1f561574a52, type: 3}
---- !u!4 &1131444299007771551 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4144418516785846, guid: 55302fb0a0b483949b0ef1f561574a52,
-    type: 3}
-  m_PrefabInstance: {fileID: 1134075650961938729}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &971783876970645567 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198566862194741526, guid: 55302fb0a0b483949b0ef1f561574a52,
+    type: 3}
+  m_PrefabInstance: {fileID: 1134075650961938729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1131444299007771551 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4144418516785846, guid: 55302fb0a0b483949b0ef1f561574a52,
     type: 3}
   m_PrefabInstance: {fileID: 1134075650961938729}
   m_PrefabAsset: {fileID: 0}
@@ -157842,15 +157940,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7220f734da869ae4ebcff6ec88fdefb6, type: 3}
---- !u!198 &7932600179559924370 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198574197344693046, guid: 7220f734da869ae4ebcff6ec88fdefb6,
-    type: 3}
-  m_PrefabInstance: {fileID: 7842803227620239780}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7838108312613703722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4985189981174158, guid: 7220f734da869ae4ebcff6ec88fdefb6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7842803227620239780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7932600179559924370 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198574197344693046, guid: 7220f734da869ae4ebcff6ec88fdefb6,
     type: 3}
   m_PrefabInstance: {fileID: 7842803227620239780}
   m_PrefabAsset: {fileID: 0}

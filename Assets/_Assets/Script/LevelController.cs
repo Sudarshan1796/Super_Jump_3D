@@ -6,6 +6,7 @@ using static GameVariables;
 public class LevelController : MonoBehaviour
 {
     [SerializeField] private ControlType controlType;
+    [SerializeField] private List<Transform> dummyCharacters;
     [SerializeField] private List<Transform> jumpPoints;
     [SerializeField] private List<ParticleSystem> winParticleEffects;
     [SerializeField] private FinalDestructibleObject finalDestroyableObject;
@@ -13,6 +14,11 @@ public class LevelController : MonoBehaviour
     public ControlType GetLevelControlType()
     {
         return controlType;
+    }
+
+    public List<Transform> GetDummyCharacters()
+    {
+        return dummyCharacters;
     }
 
     public List<Transform> GetJumpPoints()
